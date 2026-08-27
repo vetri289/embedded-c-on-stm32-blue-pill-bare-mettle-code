@@ -1,0 +1,1059 @@
+1) led glow:
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOC_CRH (*(volatile uint32_t *)0x40011004)
+#define GPIOC_ODR (*(volatile uint32_t *)0x4001100C)
+int main(void){
+  RCC_APB2ENB |=(1<<4);
+  GPIOC_CRH &=~(0xF<<20);
+  GPIOC_CRH |=(0x2<<20);
+  while(1){
+    GPIOC_ODR |=(1<<13);
+
+  }
+}
+
+
+
+
+2) led blinking:
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOC_CRH (*(volatile uint32_t *)0x40011004)
+#define GPIOC_ODR (*(volatile uint32_t *)0x4001100C)
+void delay(void){
+    for( volatile int i=0;i<=800000;i++);
+  }
+int main(void){
+  RCC_APB2ENB |=(1<<4);
+  GPIOC_CRH &=~(0xF<<20);
+  GPIOC_CRH |=(0x2<<20);
+  while(1){
+    GPIOC_ODR |=(1<<13);
+    delay();
+      GPIOC_ODR &=~(1<<13);
+       delay();
+
+  }
+}
+
+3) 2led glow:
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOC_CRH (*(volatile uint32_t *)0x40011004)
+#define GPIOC_ODR (*(volatile uint32_t *)0x4001100C)
+int main(void){
+  RCC_APB2ENB |=(1<<4);
+  GPIOC_CRH &=~(0xF<<20);
+  GPIOC_CRH |=(0x2<<20);
+  GPIOC_CRH &=~(0xF<<24);
+  GPIOC_CRH |=(0x2<<24);
+
+  while(1){
+    GPIOC_ODR |=(1<<13);
+    GPIOC_ODR &=~(1<<13);
+     GPIOC_ODR |=(1<<14);
+      GPIOC_ODR &=~(1<<14);
+
+  }
+}
+
+4) 2led on and off on same time:
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOC_CRH (*(volatile uint32_t *)0x40011004)
+#define GPIOC_ODR (*(volatile uint32_t *)0x4001100C)
+void delay(void){
+    for( volatile int i=0;i<=800000;i++);
+  }
+int main(void){
+  RCC_APB2ENB |=(1<<4);
+  GPIOC_CRH &=~(0xF<<20);
+  GPIOC_CRH |=(0x2<<20);
+  GPIOC_CRH &=~(0xF<<24);
+  GPIOC_CRH |=(0x2<<24);
+
+  while(1){
+    GPIOC_ODR &=~(1<<13);
+    GPIOC_ODR &=~(1<<14);
+    delay();
+     GPIOC_ODR |=(1<<14);
+     GPIOC_ODR |=(1<<13);
+    
+       delay();
+
+  }
+}
+
+
+
+5) 2led one is on another one is off:
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOC_CRH (*(volatile uint32_t *)0x40011004)
+#define GPIOC_ODR (*(volatile uint32_t *)0x4001100C)
+void delay(void){
+    for( volatile int i=0;i<=800000;i++);
+  }
+int main(void){
+  RCC_APB2ENB |=(1<<4);
+  GPIOC_CRH &=~(0xF<<20);
+  GPIOC_CRH |=(0x2<<20);
+  GPIOC_CRH &=~(0xF<<24);
+  GPIOC_CRH |=(0x2<<24);
+
+  while(1){
+    GPIOC_ODR |=(1<<13);
+    GPIOC_ODR &=~(1<<14);
+    delay();
+     GPIOC_ODR |=(1<<14);
+      GPIOC_ODR &=~(1<<13);
+       delay();
+
+  }
+}
+
+6) one is on and another led is blinking:
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOC_CRH (*(volatile uint32_t *)0x40011004)
+#define GPIOC_ODR (*(volatile uint32_t *)0x4001100C)
+void delay(void){
+    for( volatile int i=0;i<=800000;i++);
+  }
+int main(void){
+  RCC_APB2ENB |=(1<<4);
+  GPIOC_CRH &=~(0xF<<20);
+  GPIOC_CRH |=(0x2<<20);
+  GPIOC_CRH &=~(0xF<<24);
+  GPIOC_CRH |=(0x2<<24);
+
+  while(1){
+    GPIOC_ODR |=(1<<13);
+    
+     GPIOC_ODR |=(1<<14);
+     GPIOC_ODR &=(1<<14);
+    
+       delay();
+
+  }
+}
+7) on b port to glow 10 led.
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOB_CRH (*(volatile uint32_t *)0x40010C04)
+#define GPIOB_CRL (*(volatile uint32_t *)0x40010C00)
+#define GPIOB_ODR (*(volatile uint32_t *)0x40010C0C)
+int main(void){
+  RCC_APB2ENB |=(1<<3);
+  GPIOB_CRH &=~(0xF<<28);
+  GPIOB_CRH &=~(0xF<<24);
+  GPIOB_CRH &=~(0xF<<20);
+  GPIOB_CRH &=~(0xF<<16);
+  GPIOB_CRH &=~(0xF<<12);
+  GPIOB_CRH &=~(0xF<<8);
+  GPIOB_CRH &=~(0xF<<4);
+  GPIOB_CRH &=~(0xF<<0);
+  GPIOB_CRL &=~(0xF<<28);
+  GPIOB_CRL &=~(0xF<<24);
+  
+  GPIOB_CRH |=(0x2<<28);
+  GPIOB_CRH |=(0x2<<24);
+  GPIOB_CRH |=(0x2<<20);
+  GPIOB_CRH |=(0x2<<16);
+  GPIOB_CRH |=(0x2<<12);
+  GPIOB_CRH |=(0x2<<8);
+  GPIOB_CRH |=(0x2<<4);
+  GPIOB_CRH |=(0x2<<0);
+  GPIOB_CRL |=(0x2<<28);
+  GPIOB_CRL |=(0x2<<24);
+  while(1){
+    GPIOB_ODR |=(1<<15);
+     GPIOB_ODR |=(1<<14);
+      GPIOB_ODR |=(1<<13);
+       GPIOB_ODR |=(1<<12);
+        GPIOB_ODR |=(1<<11);
+         GPIOB_ODR |=(1<<10);
+          GPIOB_ODR |=(1<<9);
+           GPIOB_ODR |=(1<<8);
+            GPIOB_ODR |=(1<<7);
+             GPIOB_ODR |=(1<<6);
+  }
+}
+
+8) 10 light on and of one by one.
+
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOB_CRH (*(volatile uint32_t *)0x40010C04)
+#define GPIOB_CRL (*(volatile uint32_t *)0x40010C00)
+#define GPIOB_ODR (*(volatile uint32_t *)0x40010C0C)
+void delay (void){
+  for(volatile int i=0;i<800000;i++);
+}
+int main(void){
+  RCC_APB2ENB |=(1<<3);
+  GPIOB_CRH &=~(0xF<<28);
+  GPIOB_CRH &=~(0xF<<24);
+  GPIOB_CRH &=~(0xF<<20);
+  GPIOB_CRH &=~(0xF<<16);
+  GPIOB_CRH &=~(0xF<<12);
+  GPIOB_CRH &=~(0xF<<8);
+  GPIOB_CRH &=~(0xF<<4);
+  GPIOB_CRH &=~(0xF<<0);
+  GPIOB_CRL &=~(0xF<<28);
+  GPIOB_CRL &=~(0xF<<24);
+  
+  GPIOB_CRH |=(0x2<<28);
+  GPIOB_CRH |=(0x2<<24);
+  GPIOB_CRH |=(0x2<<20);
+  GPIOB_CRH |=(0x2<<16);
+  GPIOB_CRH |=(0x2<<12);
+  GPIOB_CRH |=(0x2<<8);
+  GPIOB_CRH |=(0x2<<4);
+  GPIOB_CRH |=(0x2<<0);
+  GPIOB_CRL |=(0x2<<28);
+  GPIOB_CRL |=(0x2<<24);
+  while(1){
+    GPIOB_ODR &=~(1<<15);
+    delay();
+    GPIOB_ODR |=(1<<15);
+     delay();
+    GPIOB_ODR &=~(1<<14);
+     delay();
+     GPIOB_ODR |=(1<<14);
+      delay();
+     GPIOB_ODR &=~(1<<13);
+      delay();
+      GPIOB_ODR |=(1<<13);
+      delay();
+      GPIOB_ODR &=~(1<<12);
+      delay();
+       GPIOB_ODR |=(1<<12);
+       delay();
+       GPIOB_ODR &=~(1<<11);
+       delay();
+        GPIOB_ODR |=(1<<11);
+        delay();
+        GPIOB_ODR &=~(1<<10);
+        delay();
+         GPIOB_ODR |=(1<<10);
+         delay();
+         GPIOB_ODR &=~(1<<9);
+         delay();
+          GPIOB_ODR |=(1<<9);
+          delay();
+          GPIOB_ODR &=~(1<<8);
+          delay();
+           GPIOB_ODR |=(1<<8);
+           delay();
+           GPIOB_ODR &=~(1<<7);
+           delay();
+            GPIOB_ODR |=(1<<7);
+            delay();
+            GPIOB_ODR &=~(1<<6);
+            delay();
+             GPIOB_ODR |=(1<<6);
+             delay();
+  }
+}
+
+9) on and off the 10 led at same time.
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOB_CRH (*(volatile uint32_t *)0x40010C04)
+#define GPIOB_CRL (*(volatile uint32_t *)0x40010C00)
+#define GPIOB_ODR (*(volatile uint32_t *)0x40010C0C)
+void delay (void){
+  for(volatile int i=0;i<800000;i++);
+}
+int main(void){
+  RCC_APB2ENB |=(1<<3);
+  GPIOB_CRH &=~(0xF<<28);
+  GPIOB_CRH &=~(0xF<<24);
+  GPIOB_CRH &=~(0xF<<20);
+  GPIOB_CRH &=~(0xF<<16);
+  GPIOB_CRH &=~(0xF<<12);
+  GPIOB_CRH &=~(0xF<<8);
+  GPIOB_CRH &=~(0xF<<4);
+  GPIOB_CRH &=~(0xF<<0);
+  GPIOB_CRL &=~(0xF<<28);
+  GPIOB_CRL &=~(0xF<<24);
+  
+  GPIOB_CRH |=(0x2<<28);
+  GPIOB_CRH |=(0x2<<24);
+  GPIOB_CRH |=(0x2<<20);
+  GPIOB_CRH |=(0x2<<16);
+  GPIOB_CRH |=(0x2<<12);
+  GPIOB_CRH |=(0x2<<8);
+  GPIOB_CRH |=(0x2<<4);
+  GPIOB_CRH |=(0x2<<0);
+  GPIOB_CRL |=(0x2<<28);
+  GPIOB_CRL |=(0x2<<24);
+  while(1){
+    GPIOB_ODR &=~(1<<15);
+    GPIOB_ODR &=~(1<<14);
+     GPIOB_ODR &=~(1<<13);
+      GPIOB_ODR &=~(1<<12);
+       GPIOB_ODR &=~(1<<11);
+        GPIOB_ODR &=~(1<<10);
+         GPIOB_ODR &=~(1<<9);
+          GPIOB_ODR &=~(1<<8);
+           GPIOB_ODR &=~(1<<7);
+            GPIOB_ODR &=~(1<<6);
+             delay();
+             GPIOB_ODR |=(1<<15);
+              GPIOB_ODR |=(1<<14);
+               GPIOB_ODR |=(1<<13);
+                GPIOB_ODR |=(1<<12);
+                 GPIOB_ODR |=(1<<11);
+                  GPIOB_ODR |=(1<<10);
+                   GPIOB_ODR |=(1<<9);
+                    GPIOB_ODR |=(1<<8);
+                     GPIOB_ODR |=(1<<7);
+                      GPIOB_ODR |=(1<<6);
+                       delay();
+  }
+}
+
+10) 10 led glow one by one and glow revese and next 2 pair and blink 3 pair and blink 4 pair and blink 5 pair:
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOB_CRL (*(volatile uint32_t *)0x40010C00)
+#define GPIOB_CRH (*(volatile uint32_t *)0x40010C04)
+#define GPIOB_ODR (*(volatile uint32_t *)0x40010C0C)
+void delay (void){
+  for(volatile int i=0;i<80000;i++);
+}
+int main(void){
+  RCC_APB2ENB |=(1<<3);
+
+  GPIOB_CRL &=~(0xf<<12);//3
+  GPIOB_CRL &=~(0xf<<16);//4
+  GPIOB_CRL &=~(0xf<<20);//5
+  GPIOB_CRL &=~(0xf<<24);//6
+  GPIOB_CRL &=~(0xf<<28);//7
+  GPIOB_CRH &=~(0xf<<0);//8
+  GPIOB_CRH &=~(0xf<<4);//9
+  GPIOB_CRH &=~(0xf<<8);//10
+  GPIOB_CRH &=~(0xf<<12);//11
+  GPIOB_CRH &=~(0xf<<16);//12
+
+  GPIOB_CRL |=(0x2<<12);
+  GPIOB_CRL |=(0x2<<16);
+  GPIOB_CRL |=(0x2<<20);
+  GPIOB_CRL |=(0x2<<24);
+  GPIOB_CRL |=(0x2<<28);
+  GPIOB_CRH |=(0x2<<0);
+  GPIOB_CRH |=(0x2<<4);
+  GPIOB_CRH |=(0x2<<8);
+  GPIOB_CRH |=(0x2<<12);
+  GPIOB_CRH |=(0x2<<16);
+
+  while(1){
+    for(int j=3;j<13;j++){
+      GPIOB_ODR |=(1<<j);
+      delay();
+      GPIOB_ODR &=~(1<<j);
+      delay();
+    }
+    for(int k=13;k>=3;k--){
+      GPIOB_ODR |=(1<<k);
+      delay();
+      GPIOB_ODR &=~(1<<k);
+      delay();
+    }
+    GPIOB_ODR |=(1<<3);
+    GPIOB_ODR|=(1<<4);
+    delay();
+    GPIOB_ODR &=~(1<<3);
+    GPIOB_ODR &=~(1<<4);
+    delay();
+
+    GPIOB_ODR |=(1<<5);
+    GPIOB_ODR|=(1<<6);
+    delay();
+    GPIOB_ODR &=~(1<<5);
+    GPIOB_ODR &=~(1<<6);
+    delay();
+
+    GPIOB_ODR |=(1<<7);
+    GPIOB_ODR|=(1<<8);
+    delay();
+    GPIOB_ODR &=~(1<<7);
+    GPIOB_ODR &=~(1<<8);
+    delay();
+
+    GPIOB_ODR |=(1<<9);
+    GPIOB_ODR|=(1<<10);
+    delay();
+
+    GPIOB_ODR &=~(1<<9);
+    GPIOB_ODR &=~(1<<10);
+    delay();
+
+    GPIOB_ODR |=(1<<11);
+    GPIOB_ODR|=(1<<12);
+    delay();
+
+    GPIOB_ODR &=~(1<<11);
+    GPIOB_ODR &=~(1<<12);
+    delay();
+
+GPIOB_ODR |=(1<<3);
+GPIOB_ODR |=(1<<4);
+GPIOB_ODR |=(1<<5);
+delay();
+GPIOB_ODR &=~(1<<3);
+GPIOB_ODR &=~(1<<4);
+GPIOB_ODR &=~(1<<5);
+delay();
+
+GPIOB_ODR |=(1<<6);
+GPIOB_ODR |=(1<<7);
+GPIOB_ODR |=(1<<8);
+delay();
+GPIOB_ODR &=~(1<<6);
+GPIOB_ODR &=~(1<<7);
+GPIOB_ODR &=~(1<<8);
+delay();
+
+ GPIOB_ODR |=(1<<9);
+    GPIOB_ODR|=(1<<10);
+    GPIOB_ODR|=(1<<11);
+    delay();
+    GPIOB_ODR &=~(1<<9);
+    GPIOB_ODR &=~(1<<10);
+     GPIOB_ODR &=~(1<<11);
+    delay();
+
+GPIOB_ODR |=(1<<3);
+GPIOB_ODR |=(1<<4);
+GPIOB_ODR |=(1<<5);
+GPIOB_ODR |=(1<<6);
+
+delay();
+GPIOB_ODR &=~(1<<3);
+GPIOB_ODR &=~(1<<4);
+GPIOB_ODR &=~(1<<5);
+GPIOB_ODR &=~(1<<6);
+delay();
+
+GPIOB_ODR |=(1<<7);
+GPIOB_ODR |=(1<<8);
+GPIOB_ODR |=(1<<9);
+GPIOB_ODR |=(1<<10);
+
+delay();
+GPIOB_ODR &=~(1<<7);
+GPIOB_ODR &=~(1<<8);
+GPIOB_ODR &=~(1<<9);
+GPIOB_ODR &=~(1<<10);
+delay();
+
+GPIOB_ODR |=(1<<11);
+    GPIOB_ODR|=(1<<12);
+    delay();
+    GPIOB_ODR &=~(1<<11);
+    GPIOB_ODR &=~(1<<12);
+    delay();
+
+
+
+GPIOB_ODR |=(1<<3);
+GPIOB_ODR |=(1<<4);
+GPIOB_ODR |=(1<<5);
+GPIOB_ODR |=(1<<6);
+GPIOB_ODR |=(1<<7);
+
+
+delay();
+GPIOB_ODR &=~(1<<3);
+GPIOB_ODR &=~(1<<4);
+GPIOB_ODR &=~(1<<5);
+GPIOB_ODR &=~(1<<6);
+GPIOB_ODR &=~(1<<7);
+delay();
+
+GPIOB_ODR |=(1<<8);
+GPIOB_ODR |=(1<<9);
+GPIOB_ODR |=(1<<10);
+GPIOB_ODR |=(1<<11);
+GPIOB_ODR |=(1<<12);
+
+
+delay();
+GPIOB_ODR &=~(1<<8);
+GPIOB_ODR &=~(1<<9);
+GPIOB_ODR &=~(1<<10);
+GPIOB_ODR &=~(1<<11);
+GPIOB_ODR &=~(1<<12);
+delay();
+ }
+            
+}
+
+
+
+###trafic signal:
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOB_CRL (*(volatile uint32_t *)0x40010C00)
+#define GPIOB_CRH (*(volatile uint32_t *)0x40010C04)
+#define GPIOB_ODR (*(volatile uint32_t *)0x40010C0C)
+void delay (void){
+  for(volatile int i=0;i<800000;i++);
+}
+int main(void){
+  RCC_APB2ENB |=(1<<3);
+GPIOB_CRL &=~(0xf<<12);//3 pin north
+GPIOB_CRL &=~(0xf<<16);//4 pi north
+GPIOB_CRL &=~(0xf<<20);//5 pin north
+GPIOB_CRL &=~(0xf<<24);//6 pin south
+GPIOB_CRL &=~(0xf<<28);//7 pin south
+GPIOB_CRH &=~(0xf<<0);//8 pin south
+GPIOB_CRH &=~(0xf<<4);//9 pin west
+GPIOB_CRH &=~(0xf<<8);//10 pin west
+GPIOB_CRH &=~(0xf<<12);//11 pin west
+GPIOB_CRH &=~(0xf<<16);//12 pin east
+GPIOB_CRH &=~(0xf<<20);//13 pin east
+GPIOB_CRH &=~(0xf<<24);//14 pin east
+
+
+GPIOB_CRL |=(0x2<<12);//3 pin north
+GPIOB_CRL |=(0x2<<16);//4 pi north
+GPIOB_CRL |=(0x2<<20);//5 pin north
+GPIOB_CRL |=(0x2<<24);//6 pin south
+GPIOB_CRL |=(0x2<<28);//7 pin south
+GPIOB_CRH |=(0x2<<0);//8 pin south
+GPIOB_CRH |=(0x2<<4);//9 pin west
+GPIOB_CRH |=(0x2<<8);//10 pin west
+GPIOB_CRH |=(0x2<<12);//11 pin west
+GPIOB_CRH |=(0x2<<16);//12 pin east
+GPIOB_CRH |=(0x2<<20);//13 pin east
+GPIOB_CRH |=(0x2<<24);//14 pin 
+
+while(1){
+GPIOB_ODR |=(1<<3);
+GPIOB_ODR |=(1<<6);
+GPIOB_ODR |=(1<<11);
+GPIOB_ODR |=(1<<14);
+delay();
+GPIOB_ODR &=~(1<<3);
+GPIOB_ODR &=~(1<<6);
+GPIOB_ODR &=~(1<<11);
+GPIOB_ODR &=~(1<<14);
+delay();
+GPIOB_ODR |=(1<<4);
+GPIOB_ODR |=(1<<7);
+GPIOB_ODR |=(1<<11);
+GPIOB_ODR |=(1<<14);
+delay();
+GPIOB_ODR &=~(1<<4);
+GPIOB_ODR &=~(1<<7);
+GPIOB_ODR &=~(1<<11);
+GPIOB_ODR &=~(1<<14);
+delay();
+GPIOB_ODR |=(1<<5);
+GPIOB_ODR |=(1<<8);
+GPIOB_ODR |=(1<<9);
+GPIOB_ODR |=(1<<12);
+delay();
+GPIOB_ODR &=~(1<<5);
+GPIOB_ODR &=~(1<<8);
+GPIOB_ODR &=~(1<<9);
+GPIOB_ODR &=~(1<<12);
+delay();
+GPIOB_ODR |=(1<<10);
+GPIOB_ODR |=(1<<13);
+GPIOB_ODR |=(1<<5);
+GPIOB_ODR |=(1<<8);
+delay();
+GPIOB_ODR &=~(1<<10);
+GPIOB_ODR &=~(1<<13);
+GPIOB_ODR &=~(1<<5);
+GPIOB_ODR &=~(1<<8);
+delay();
+
+}
+}
+
+11) if you press a button the them led get glow
+
+
+#include<stdint.h>
+#define RCC_APB2ENB (*(volatile uint32_t *)0x40021018)
+#define GPIOB_CRL (*(volatile uint32_t *)0x40010C00) 
+#define GPIOB_IDR (*(volatile uint32_t *)0x40010C08)
+#define GPIOB_ODR (*(volatile uint32_t *)0x40010C0C)
+void delay(void){
+  for(volatile int i=0;i<800000;i++);
+}
+int main(void){
+  RCC_APB2ENB|=(1<<3);
+  GPIOB_CRL &=~(0xf<<16);
+  GPIOB_CRL &=~(0xf<<20);
+  GPIOB_CRL |=(0x2<<16);
+  GPIOB_CRL |=(0x8<<20);
+  while(1){
+if((GPIOB_IDR &(1<<5))==0){
+  GPIOB_ODR &=~(1<<4);
+}else{
+  GPIOB_ODR |=(1<<4);
+  delay();
+}
+
+  }
+}
+
+11) use pushbutton to glow led on different patten
+
+
+#include<stdint.h>
+#define RCC_APB2ENR (*(volatile uint32_t *)0x40021018)
+#define GPIOB_CRL (*(volatile uint32_t *)0x40010C00)
+#define GPIOB_CRH (*(volatile uint32_t *)0x40010C04)
+#define GPIOB_ODR  (*(volatile uint32_t *)0x40010C0C)
+#define GPIOA_IDR  (*(volatile uint32_t *)0x40010808)
+#define GPIOA_CRL (*(volatile uint32_t *)0x40010800)
+void mydelay (void){
+  for(volatile int m=0;m<80000;m++);
+}
+void main(void){
+RCC_APB2ENR |=(1<<2);
+RCC_APB2ENR |=(1<<3);
+GPIOA_CRL &=~(0xfffff<<0);
+GPIOA_CRL |=(0x88888<<0);
+
+GPIOB_CRL &=~(0xfffff<<12);
+GPIOB_CRL |=(0x22222<<12);
+
+GPIOB_CRH &=~(0xfffff<<0);
+GPIOB_CRH |=(0x22222<<0);
+
+while(1){
+  if((GPIOA_IDR &(1<<0))==0){
+    for(int q=3;q<=13;q++){
+      GPIOB_ODR &=~(1<<q);
+      }
+  }else{
+   for(int j=3;j<13;j++){
+      GPIOB_ODR |=(1<<j);
+      mydelay();
+      GPIOB_ODR &=~(1<<j);
+      mydelay();
+    }
+    for(int k=13;k>=3;k--){
+      GPIOB_ODR |=(1<<k);
+      mydelay();
+      GPIOB_ODR &=~(1<<k);
+      mydelay();
+    }
+
+  }
+  if((GPIOA_IDR &(1<<1))==0){
+    for(int w=3;w<=13;w++){
+      GPIOB_ODR &=~(1<<w);
+    }
+  
+  }else{
+GPIOB_ODR |=(1<<3);
+    GPIOB_ODR|=(1<<4);
+    mydelay();
+    GPIOB_ODR &=~(1<<3);
+    GPIOB_ODR &=~(1<<4);
+    mydelay();
+
+    GPIOB_ODR |=(1<<5);
+    GPIOB_ODR|=(1<<6);
+    mydelay();
+    GPIOB_ODR &=~(1<<5);
+    GPIOB_ODR &=~(1<<6);
+    mydelay();
+
+    GPIOB_ODR |=(1<<7);
+    GPIOB_ODR|=(1<<8);
+    mydelay();
+    GPIOB_ODR &=~(1<<7);
+    GPIOB_ODR &=~(1<<8);
+    mydelay();
+
+    GPIOB_ODR |=(1<<9);
+    GPIOB_ODR|=(1<<10);
+    mydelay();
+
+    GPIOB_ODR &=~(1<<9);
+    GPIOB_ODR &=~(1<<10);
+    mydelay();
+
+    GPIOB_ODR |=(1<<11);
+    GPIOB_ODR|=(1<<12);
+    mydelay();
+
+    GPIOB_ODR &=~(1<<11);
+    GPIOB_ODR &=~(1<<12);
+    mydelay();
+
+GPIOB_ODR |=(1<<9);
+    GPIOB_ODR|=(1<<10);
+    mydelay();
+
+    GPIOB_ODR &=~(1<<9);
+    GPIOB_ODR &=~(1<<10);
+    mydelay();
+
+GPIOB_ODR |=(1<<7);
+    GPIOB_ODR|=(1<<8);
+    mydelay();
+    GPIOB_ODR &=~(1<<7);
+    GPIOB_ODR &=~(1<<8);
+    mydelay();
+
+
+    GPIOB_ODR |=(1<<5);
+    GPIOB_ODR|=(1<<6);
+    mydelay();
+    GPIOB_ODR &=~(1<<5);
+    GPIOB_ODR &=~(1<<6);
+    mydelay();
+
+GPIOB_ODR |=(1<<3);
+    GPIOB_ODR|=(1<<4);
+    mydelay();
+    GPIOB_ODR &=~(1<<3);
+    GPIOB_ODR &=~(1<<4);
+    mydelay();
+
+  }
+  if((GPIOA_IDR &(1<<2))==0){
+    for(int e=3;e<=13;e++){
+      GPIOB_ODR &=~(1<<e);
+    }
+  
+  }else{
+
+GPIOB_ODR |=(1<<3);
+GPIOB_ODR |=(1<<4);
+GPIOB_ODR |=(1<<5);
+mydelay();
+GPIOB_ODR &=~(1<<3);
+GPIOB_ODR &=~(1<<4);
+GPIOB_ODR &=~(1<<5);
+mydelay();
+
+GPIOB_ODR |=(1<<6);
+GPIOB_ODR |=(1<<7);
+GPIOB_ODR |=(1<<8);
+mydelay();
+GPIOB_ODR &=~(1<<6);
+GPIOB_ODR &=~(1<<7);
+GPIOB_ODR &=~(1<<8);
+mydelay();
+
+ GPIOB_ODR |=(1<<9);
+    GPIOB_ODR|=(1<<10);
+    GPIOB_ODR|=(1<<11);
+    mydelay();
+    GPIOB_ODR &=~(1<<9);
+    GPIOB_ODR &=~(1<<10);
+     GPIOB_ODR &=~(1<<11);
+    mydelay();
+GPIOB_ODR|=(1<<12);
+mydelay();
+GPIOB_ODR &=~(1<<12);
+
+GPIOB_ODR |=(1<<9);
+    GPIOB_ODR|=(1<<10);
+    GPIOB_ODR|=(1<<11);
+    mydelay();
+    GPIOB_ODR &=~(1<<9);
+    GPIOB_ODR &=~(1<<10);
+     GPIOB_ODR &=~(1<<11);
+    mydelay();
+
+GPIOB_ODR |=(1<<6);
+GPIOB_ODR |=(1<<7);
+GPIOB_ODR |=(1<<8);
+mydelay();
+GPIOB_ODR &=~(1<<6);
+GPIOB_ODR &=~(1<<7);
+GPIOB_ODR &=~(1<<8);
+mydelay();
+
+GPIOB_ODR |=(1<<3);
+GPIOB_ODR |=(1<<4);
+GPIOB_ODR |=(1<<5);
+mydelay();
+GPIOB_ODR &=~(1<<3);
+GPIOB_ODR &=~(1<<4);
+GPIOB_ODR &=~(1<<5);
+mydelay();
+
+    }
+  
+if((GPIOA_IDR &(1<<3))==0){
+  for(int r=3;r<=13;r++){
+      GPIOB_ODR &=~(1<<r);
+    }
+  
+  }else{
+GPIOB_ODR |=(1<<3);
+GPIOB_ODR |=(1<<4);
+GPIOB_ODR |=(1<<5);
+GPIOB_ODR |=(1<<6);
+
+mydelay();
+GPIOB_ODR &=~(1<<3);
+GPIOB_ODR &=~(1<<4);
+GPIOB_ODR &=~(1<<5);
+GPIOB_ODR &=~(1<<6);
+mydelay();
+
+GPIOB_ODR |=(1<<7);
+GPIOB_ODR |=(1<<8);
+GPIOB_ODR |=(1<<9);
+GPIOB_ODR |=(1<<10);
+
+mydelay();
+GPIOB_ODR &=~(1<<7);
+GPIOB_ODR &=~(1<<8);
+GPIOB_ODR &=~(1<<9);
+GPIOB_ODR &=~(1<<10);
+mydelay();
+
+GPIOB_ODR |=(1<<11);
+    GPIOB_ODR|=(1<<12);
+    mydelay();
+    GPIOB_ODR &=~(1<<11);
+    GPIOB_ODR &=~(1<<12);
+    mydelay();
+
+GPIOB_ODR |=(1<<7);
+GPIOB_ODR |=(1<<8);
+GPIOB_ODR |=(1<<9);
+GPIOB_ODR |=(1<<10);
+
+mydelay();
+GPIOB_ODR &=~(1<<7);
+GPIOB_ODR &=~(1<<8);
+GPIOB_ODR &=~(1<<9);
+GPIOB_ODR &=~(1<<10);
+mydelay();
+
+GPIOB_ODR |=(1<<3);
+GPIOB_ODR |=(1<<4);
+GPIOB_ODR |=(1<<5);
+GPIOB_ODR |=(1<<6);
+
+mydelay();
+GPIOB_ODR &=~(1<<3);
+GPIOB_ODR &=~(1<<4);
+GPIOB_ODR &=~(1<<5);
+GPIOB_ODR &=~(1<<6);
+mydelay();
+    
+
+    
+  }
+  if((GPIOA_IDR &(1<<4))==0){
+    for(int t=3;t<=13;t++){
+      GPIOB_ODR &=~(1<<t);
+    }
+  
+  }else{
+
+    GPIOB_ODR |=(1<<3);
+GPIOB_ODR |=(1<<4);
+GPIOB_ODR |=(1<<5);
+GPIOB_ODR |=(1<<6);
+GPIOB_ODR |=(1<<7);
+
+
+mydelay();
+GPIOB_ODR &=~(1<<3);
+GPIOB_ODR &=~(1<<4);
+GPIOB_ODR &=~(1<<5);
+GPIOB_ODR &=~(1<<6);
+GPIOB_ODR &=~(1<<7);
+mydelay();
+
+GPIOB_ODR |=(1<<8);
+GPIOB_ODR |=(1<<9);
+GPIOB_ODR |=(1<<10);
+GPIOB_ODR |=(1<<11);
+GPIOB_ODR |=(1<<12);
+
+
+mydelay();
+GPIOB_ODR &=~(1<<8);
+GPIOB_ODR &=~(1<<9);
+GPIOB_ODR &=~(1<<10);
+GPIOB_ODR &=~(1<<11);
+GPIOB_ODR &=~(1<<12);
+mydelay();
+ }
+            
+}
+
+  }
+
+
+12) digital lock using 4x4 key pad:
+
+#include<stdint.h>
+#define RCC_APB2ENR  (*(volatile uint32_t *)0x40021018)
+#define GPIOA_CRL  (*(volatile uint32_t *)0x40010800)
+#define GPIOB_CRL (*(volatile uint32_t *)0x40010C00)
+#define GPIOA_ODR (*(volatile uint32_t *)0x4001080C)
+#define GPIOB_ODR (*(volatile uint32_t *)0x40010C0C)
+#define GPIOA_IDR  (*(volatile uint32_t *)0x40010808)
+void mdelay (void){
+for(int i=0;i<8000000;i++);
+}
+int main(void){
+  RCC_APB2ENR |=(1<<2);
+  RCC_APB2ENR |=(1<<3);
+  
+  GPIOA_CRL &=~(0xffff<<0);
+  GPIOA_CRL |=(0x8888<<0);
+
+  GPIOA_CRL &=~(0xffff<<16);
+  GPIOA_CRL |=(0x2222<<16);
+
+  GPIOB_CRL &=~(0xffff<<0);
+  GPIOB_CRL |=(0x2222<<0);
+
+GPIOA_ODR |= (0xF << 0);
+GPIOB_ODR &= ~(1 << 0);
+GPIOB_ODR &= ~(1 << 1);
+GPIOB_ODR &= ~(1 << 2);
+GPIOB_ODR &= ~(1 << 3);
+
+
+
+int value_a;
+int value_b;
+int value_c;
+int value_d;
+int value_e;
+int value_f;
+int value_g;
+int value_h;
+int value_i;
+int value_j;
+int p=0;
+int q=0;
+int r=0;
+int z=0;
+  while(1){
+
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<4);
+
+if((GPIOA_IDR & (1<<0))==0){
+  value_a=1;
+
+p=value_a;
+
+
+}
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<5);
+
+if((GPIOA_IDR & (1<<0))==0){
+  value_b=2;
+  q=value_b;
+}
+
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<6);
+
+if((GPIOA_IDR & (1<<0))==0){
+  value_c=3;
+  r=value_c;
+}
+
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<4);
+
+if((GPIOA_IDR & (1<<1))==0){
+  value_d=4;
+}
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<5);
+
+if((GPIOA_IDR & (1<<1))==0){
+  value_e=5;
+}
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<6);
+
+if((GPIOA_IDR & (1<<1))==0){
+  value_f=6;
+}
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<4);
+
+if((GPIOA_IDR & (1<<2))==0){
+  value_g=7;
+}
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<5);
+
+if((GPIOA_IDR & (1<<2))==0){
+  value_h=8;
+}
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<6);
+
+if((GPIOA_IDR & (1<<2))==0){
+  value_i=9;
+}
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<5);
+
+if((GPIOA_IDR & (1<<3))==0){
+  value_j=0;
+}
+
+GPIOA_ODR |=(0xf<<4);
+GPIOA_ODR &=~(1<<6);
+
+if((GPIOA_IDR & (1<<3))==0){
+  
+
+
+if((p==1)&&(q==2)&&(r==3)){
+  GPIOB_ODR |=(1<<0);
+  GPIOB_ODR &=~(1<<1);
+  GPIOB_ODR &=~(1<<3);
+
+}
+
+else{
+  GPIOB_ODR |=(1<<1);
+ GPIOB_ODR &=~(1<<0);
+ GPIOB_ODR |=(1<<3);
+ mdelay();
+
+
+
+
+
+
+  }
+}
+
+}
+} 
